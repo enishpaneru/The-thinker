@@ -74,7 +74,9 @@ class reward():
             current_state = current_state_grid[1] + (current_state_grid[0] * self.grid_num)
             if np.max(self.Q[current_state,]) <=0:
                 print("no way possible")
-                exit(0)
+                if len(steps)==1:
+                    steps.append(self.initial_state)
+                return steps
             next_step_index = np.where(self.Q[current_state,] == np.max(self.Q[current_state,]))[1]
             if next_step_index.shape[0] > 1:
                 next_step_index = int(np.random.choice(next_step_index, size=1))
@@ -87,6 +89,7 @@ class reward():
 
         print("Most efficient path:")
         print(steps)
+        return steps
 
     def get_Q(self):
         return self.Q
